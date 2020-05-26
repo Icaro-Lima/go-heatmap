@@ -78,7 +78,7 @@ func (h *Heatmap) Render(palette color.Palette) *image.RGBA {
 }
 
 func (h *Heatmap) RenderSaturated(palette color.Palette, saturation float32) *image.RGBA {
-	output := image.NewRGBA(image.Rect(0, 0, h.Width, h.Height))
+	output := image.NewNRGBA(image.Rect(0, 0, h.Width, h.Height))
 
 	for y := 0; y < h.Height; y++ {
 		buffLine := y * h.Width
