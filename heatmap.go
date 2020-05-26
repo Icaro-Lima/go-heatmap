@@ -56,7 +56,7 @@ func (h *Heatmap) AddPointWithStamp(x int, y int, stamp *stamp.Stamp) {
 		stampLine := iy*stamp.Width + x0
 
 		for ix := x0; ix < x1; ix, line, stampLine = ix+1, line+1, stampLine+1 {
-			line += stampLine
+			h.Buffer[line] += stamp.Buffer[stampLine]
 			if h.Buffer[line] > h.Max {
 				h.Max = h.Buffer[line]
 			}
