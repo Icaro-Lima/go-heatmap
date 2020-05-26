@@ -64,11 +64,11 @@ func (h *Heatmap) AddPointWithStamp(x int, y int, stamp *stamp.Stamp) {
 	}
 }
 
-func (h *Heatmap) RenderDefault() *image.RGBA {
+func (h *Heatmap) RenderDefault() *image.NRGBA {
 	return h.Render(palette.Plan9)
 }
 
-func (h *Heatmap) Render(palette color.Palette) *image.RGBA {
+func (h *Heatmap) Render(palette color.Palette) *image.NRGBA {
 	var saturation float32
 	if saturation = 1; h.Max > 0 {
 		saturation = h.Max
@@ -77,7 +77,7 @@ func (h *Heatmap) Render(palette color.Palette) *image.RGBA {
 	return h.RenderSaturated(palette, saturation)
 }
 
-func (h *Heatmap) RenderSaturated(palette color.Palette, saturation float32) *image.RGBA {
+func (h *Heatmap) RenderSaturated(palette color.Palette, saturation float32) *image.NRGBA {
 	output := image.NewNRGBA(image.Rect(0, 0, h.Width, h.Height))
 
 	for y := 0; y < h.Height; y++ {
