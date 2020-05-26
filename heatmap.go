@@ -13,7 +13,7 @@ type Heatmap struct {
 	Width, Height int
 }
 
-var defaultStamp = stamp.New(9)
+var defaultStamp = stamp.New(4)
 
 func New(width, height int) *Heatmap {
 	h := Heatmap{
