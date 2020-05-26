@@ -1,10 +1,10 @@
 package heatmap
 
 import (
+	palette2 "github.com/Icaro-Lima/go-heatmap/palette"
 	"github.com/Icaro-Lima/go-heatmap/stamp"
 	"image"
 	"image/color"
-	"image/color/palette"
 )
 
 type Heatmap struct {
@@ -14,6 +14,7 @@ type Heatmap struct {
 }
 
 var defaultStamp = stamp.New(4)
+var defaultPalette = palette2.SpectralMixed
 
 func New(width, height int) *Heatmap {
 	h := Heatmap{
@@ -65,7 +66,7 @@ func (h *Heatmap) AddPointWithStamp(x int, y int, stamp *stamp.Stamp) {
 }
 
 func (h *Heatmap) RenderDefault() *image.NRGBA {
-	return h.Render(palette.Plan9)
+	return h.Render(defaultPalette)
 }
 
 func (h *Heatmap) Render(palette color.Palette) *image.NRGBA {
