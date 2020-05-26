@@ -1,6 +1,11 @@
 package heatmap
 
-import "github.com/Icaro-Lima/go-heatmap/stamp"
+import (
+	"github.com/Icaro-Lima/go-heatmap/stamp"
+	"image"
+	"image/color"
+	"image/color/palette"
+)
 
 type Heatmap struct {
 	Buffer        []float32
@@ -57,4 +62,41 @@ func (h *Heatmap) AddPointWithStamp(x int, y int, stamp *stamp.Stamp) {
 			}
 		}
 	}
+}
+
+func (h *Heatmap) RenderDefault(colorPalette color.Palette) *image.RGBA {
+	return h.Render(palette.Plan9)
+}
+
+func (h *Heatmap) Render(palette color.Palette) *image.RGBA {
+	var saturation float32
+	if saturation = 1; h.Max > 0 {
+		saturation = h.Max
+	}
+
+	return h.RenderSaturated(palette, saturation)
+}
+
+func (h *Heatmap) RenderSaturated(palette color.Palette, saturation float32) *image.RGBA {
+	output := image.NewRGBA(image.Rect(0, 0, h.Width, h.Height))
+
+	for y := 0; y < h.Height; y++ {
+		buffLine := y * h.Width
+		colorLine := 4 * y * h.Width
+
+		for x := 0; x < h.Width; x++ {
+			var val float32
+			if val = h.Buffer[buffLine]; h.Buffer[buffLine] > saturation {
+				val = saturation
+			}
+			val /= saturation
+
+			idx := (int)((float32)(len(palette)-1)*val + 0.5)
+
+			output.Set(x, y, palette[idx])
+			colorLine += 4
+		}
+	}
+
+	return output
 }
