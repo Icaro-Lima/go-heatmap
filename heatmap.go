@@ -64,7 +64,7 @@ func (h *Heatmap) AddPointWithStamp(x int, y int, stamp *stamp.Stamp) {
 	}
 }
 
-func (h *Heatmap) RenderDefault(colorPalette color.Palette) *image.RGBA {
+func (h *Heatmap) RenderDefault() *image.RGBA {
 	return h.Render(palette.Plan9)
 }
 
