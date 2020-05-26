@@ -82,9 +82,8 @@ func (h *Heatmap) RenderSaturated(palette color.Palette, saturation float32) *im
 
 	for y := 0; y < h.Height; y++ {
 		buffLine := y * h.Width
-		colorLine := 4 * y * h.Width
 
-		for x := 0; x < h.Width; x++ {
+		for x := 0; x < h.Width; x, buffLine = x+1, buffLine+1 {
 			var val float32
 			if val = h.Buffer[buffLine]; h.Buffer[buffLine] > saturation {
 				val = saturation
@@ -94,7 +93,6 @@ func (h *Heatmap) RenderSaturated(palette color.Palette, saturation float32) *im
 			idx := (int)((float32)(len(palette)-1)*val + 0.5)
 
 			output.Set(x, y, palette[idx])
-			colorLine += 4
 		}
 	}
 
